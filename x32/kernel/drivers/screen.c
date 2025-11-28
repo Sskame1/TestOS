@@ -4,6 +4,7 @@
 #define VIDEO_MEMORY 0xB8000
 #define SCREEN_WIDTH 80
 #define SCREEN_HEIGHT 25
+#define SCREEN_SIZE SCREEN_WIDTH * SCREEN_HEIGHT
 
 
 void delay() {
@@ -29,5 +30,13 @@ void test_screen(char invColor) {
                 video_memory[i] = 0x40;
             }
         }
+    }
+}
+
+void clear_screen() {
+    volatile unsigned short* video_memory = (volatile unsigned short*)VIDEO_MEMORY;
+
+    for (int i = 0; i < SCREEN_SIZE + 3; i++) {
+        video_memory[i] = 0x01;
     }
 }
