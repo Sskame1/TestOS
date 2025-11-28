@@ -37,13 +37,8 @@ kernel.bin: $(OBJECTS)
 # создание загрузочного образа
 $(ISO_NAME): kernel.bin
 	mkdir -p build/boot/grub
+	cp grub/grub.cfg build/boot/grub/
 	cp kernel.bin build/boot/
-	echo 'set timeout=0' > build/boot/grub/grub.cfg
-	echo 'set default=0' >> build/boot/grub/grub.cfg
-	echo 'menuentry "testOS" {' >> build/boot/grub/grub.cfg
-	echo '  multiboot2 /boot/kernel.bin' >> build/boot/grub/grub.cfg
-	echo '  boot' >> build/boot/grub/grub.cfg
-	echo '}' >> build/boot/grub/grub.cfg
 	grub-mkrescue -o $(ISO_NAME) build/
 
 # запуск в QEMU

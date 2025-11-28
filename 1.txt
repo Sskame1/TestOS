@@ -1,0 +1,12 @@
+vboxuser@Admin:/mnt/testOS/x32$ make
+gcc -ffreestanding -fno-builtin -fno-stack-protector -nostdlib -m64 -Ikernel -c kernel/kernel.c -o kernel/kernel.o
+nasm -f elf64 boot/boot.asm -o boot/boot.o
+ld -m elf_x86_64 -T linker.ld -nostdlib -o kernel.bin kernel/kernel.o boot/boot.o
+ld: warning: kernel.bin has a LOAD segment with RWX permissions
+mkdir -p build/boot/grub
+cp grub/grub.cfg build/boot/grub/
+cp kernel.bin build/boot/
+grub-mkrescue -o testos.iso build/
+grub-mkrescue: error: xorriso not found.
+make: *** [Makefile:42: testos.iso] Error 1
+
