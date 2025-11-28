@@ -2,24 +2,30 @@ section .text
 global _start
 extern kernel
 
-; Multiboot header
-align 4
-multiboot_header:
-    dd 0x1BADB002              ; magic
-    dd 0x00000003              ; flags
-    dd -(0x1BADB002 + 0x00000003) ; checksum
-
 _start:
-    ; ставим стек
+    ; установка стека
     mov esp, stack_space
     
-    ; вызов функции ядра
+    ; проверка multiboot
+    cmp eax, 0x36d76289        ; Multiboot2 magic value
+    jne .no_multiboot
+    
+    ; вызов ядра
     call kernel
     
     ; бесконечный цикл если ядро вернется
     cli
+.halt:
+    hlt
+    jmp .halt
+
+.no_multiboot:
+    mov dword [0xB8000], 0x4F4B4F4E  ; вывод "NO" на экран красненький
+    cli
     hlt
 
 section .bss
-resb 8192
+align 16
+stack_bottom:
+resb 16384  ; 16 KB стека
 stack_space:

@@ -15,4 +15,8 @@ SECTIONS
     .bss : {
         *(.bss)
     }
+
+    .multiboot_header : {
+        *(.multiboot_header)
+    }
 }
