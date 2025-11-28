@@ -13,9 +13,10 @@ ASMFLAGS = -f elf64
 LDFLAGS = -m elf_x86_64 -T linker.ld -nostdlib
 
 # файлы
-SOURCES_C = $(wildcard kernel/*.c)
-SOURCES_ASM = $(wildcard boot/*.asm)
-OBJECTS_C = $(SOURCES_C:.c=.o)
+SOURCES_KERNEL = $(wildcard kernel/*.c)
+SOURCES_DRIVERS = $(wildcard kernel/drivers/*.c)
+SOURCES_ASM = $(wildcard boot/*.asm) 
+OBJECTS_C = $(SOURCES_KERNEL:.c=.o) $(SOURCES_DRIVERS:.c=.o)
 OBJECTS_ASM = $(SOURCES_ASM:.asm=.o)
 OBJECTS = $(OBJECTS_C) $(OBJECTS_ASM)
 
@@ -24,6 +25,9 @@ all: $(ISO_NAME)
 
 # компиляция C файлов
 kernel/%.o: kernel/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+drivers/%.o: drivers/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # компиляция ASM файлов
@@ -49,7 +53,7 @@ run: $(ISO_NAME)
 clean:
 	rm -f *.o *.bin *.iso
 	rm -rf build
-	rm -f boot/*.o kernel/*.o
+	rm -f boot/*.o kernel/*.o kernel/drivers/*.o
 
 build:
 	clear

@@ -1,15 +1,9 @@
-void clear_screen() {
-    volatile unsigned short *video_memory = (volatile unsigned short *)0xB8000;
-    int screen_size = 80 * 25;
-    
-    unsigned short cell = 0x20 | (0x27 << 8);
-    for (int i = 0; i < screen_size; i++) {
-        video_memory[i] = cell;
-    }
-}
+#include "drivers/screen.h"
 
 void kernel_main() {
-    clear_screen();
-
+    test_screen();
+    
+    // print_string("Hello World! from testOS kernel! Screen driver works!");
+    // print_string - пока не реализован
     while(1);
 }
