@@ -1,17 +1,17 @@
 section .text
 global _start
-extern kernel
+extern kernel_main
 
 _start:
-    ; установка стека
-    mov esp, stack_space
-    
     ; проверка multiboot
     cmp eax, 0x36d76289        ; Multiboot2 magic value
     jne .no_multiboot
-    
+
+    ; установка стека
+    mov esp, stack_space
+
     ; вызов ядра
-    call kernel
+    call kernel_main
     
     ; бесконечный цикл если ядро вернется
     cli
