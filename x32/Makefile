@@ -51,4 +51,11 @@ clean:
 	rm -rf build
 	rm -f boot/*.o kernel/*.o
 
-.PHONY: all run clean
+build:
+	clear
+	$(MAKE) clean
+	$(MAKE) all
+	clear
+	$(MAKE) run
+
+.PHONY: all run clean build
