@@ -9,9 +9,14 @@
 #define VIDEO_MEMORY 0xB8000
 
 // функции
-void clear_screen();
 void print_char_on_screen(const char *c, char bg, char color, int x, int y);
+
 void print_on_screen(const char *str);
 
+void set_cursor_position(int x, int y);
+
+void get_cursor_position(int *x, int *y);
+
+void clear_screen();
 
 #endif 

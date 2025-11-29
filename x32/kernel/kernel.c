@@ -3,11 +3,12 @@
 void kernel_main() {
     clear_screen();
 
-    print_char_on_screen("H", 0x1, 0x4, 5, 5);
-    print_char_on_screen("I", 0x1, 0x2, 5, 6);
-
-
-    print_on_screen("HI");
+    print_on_screen("HI\n");
+    print_on_screen("Line 1\nLine 2\nLine 3\n");
+    print_on_screen("text with\ttabulation\n");
+    print_on_screen("text with \rr");
+    set_cursor_position(20, 5);
+    print_on_screen("text at postion (20, 5)");
 
     while (1)
     {
