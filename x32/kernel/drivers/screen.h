@@ -10,7 +10,8 @@
 
 // функции
 void clear_screen();
-void print_on_screen();
+void print_char_on_screen(const char *c, char bg, char color, int x, int y);
+void print_on_screen(const char *str);
 
 
 #endif 
