@@ -1,6 +1,9 @@
 #include "screen.h"
 volatile char *videomem = (volatile char*)VIDEO_MEMORY;
 
+int cursor_x = 0;
+int cursor_y = 0;
+
 void clear_screen() {
     for (int i = 0; i < SCREEN_SIZE; i +=2) {
         videomem[i] = ' ';
@@ -27,8 +30,19 @@ void print_on_screen(const char *str) {
     int i = 0;
     
     while (str[i] != '\0') {
-        videomem[i * 2] = str[i];      // cимвол
-        videomem[i * 2 + 1] = 0x07;    // атрибут(цвет)
+        print_char_on_screen(&str[i], 0x6,0x4, cursor_x, cursor_y);
+
+        cursor_x++;
+
+        if(cursor_x >= SCREEN_WIDTH) {
+            cursor_x = 0;
+            cursor_y++;
+
+            if(cursor_y >= SCREEN_HEIGHT) {
+                cursor_y = SCREEN_HEIGHT - 1;
+            }
+        }
+
         i++;
     }
 }
