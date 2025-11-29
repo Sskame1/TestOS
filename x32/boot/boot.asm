@@ -1,4 +1,5 @@
 section .text
+bits 32
 global _start
 extern kernel_main
 
@@ -9,6 +10,13 @@ _start:
 
     ; установка стека
     mov esp, stack_space
+
+    ; инициализация сегментов данных
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
 
     ; вызов ядра
     call kernel_main

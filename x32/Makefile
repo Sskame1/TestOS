@@ -8,9 +8,9 @@ LD = ld
 QEMU = qemu-system-x86_64
 
 # флаги
-CFLAGS = -ffreestanding -fno-builtin -fno-stack-protector -nostdlib -m64 -Ikernel
-ASMFLAGS = -f elf64
-LDFLAGS = -m elf_x86_64 -T linker.ld -nostdlib
+CFLAGS = -ffreestanding -fno-builtin -fno-stack-protector -nostdlib -m32 -Ikernel
+ASMFLAGS = -f elf32
+LDFLAGS = -m elf_i386 -T linker.ld -nostdlib
 
 # файлы
 SOURCES_KERNEL = $(wildcard kernel/*.c)
