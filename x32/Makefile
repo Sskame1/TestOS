@@ -14,7 +14,7 @@ LDFLAGS = -m elf_i386 -T linker.ld -nostdlib
 
 # файлы
 SOURCES_KERNEL = $(wildcard kernel/*.c)
-SOURCES_DRIVERS = $(wildcard kernel/drivers/*.c)
+SOURCES_DRIVERS = $(wildcard kernel/drivers/**/*.c)
 SOURCES_ASM = $(wildcard boot/*.asm) 
 OBJECTS_C = $(SOURCES_KERNEL:.c=.o) $(SOURCES_DRIVERS:.c=.o)
 OBJECTS_ASM = $(SOURCES_ASM:.asm=.o)

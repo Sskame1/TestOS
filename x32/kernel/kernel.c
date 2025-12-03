@@ -1,4 +1,4 @@
-#include "drivers/screen.h"
+#include "drivers/video/screen.h"
 
 void kernel_main() {
     clear_screen();
