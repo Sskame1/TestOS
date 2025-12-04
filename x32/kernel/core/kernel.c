@@ -1,6 +1,7 @@
-#include "drivers/video/screen.h"
-#include "modules/module.h"
-#include "ipc/ipc.h"
+#include "drivers/video/screen.h";
+#include "modules/module.h";
+#include "ipc/ipc.h";
+#include "mem.h";
 
 // простенький планировщик - round-robin
 typedef struct {
@@ -33,6 +34,9 @@ void kernel_main() {
     print_on_screen("[INIT] Loading modules...\n");
 
     module_list();
+
+    print_on_screen("[INIT] Memory init...\n");
+    mem_init();
 
     print_on_screen("\n>>>");
 
