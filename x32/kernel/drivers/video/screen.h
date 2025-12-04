@@ -19,4 +19,6 @@ void get_cursor_position(int *x, int *y); // получить место рас�
 
 void clear_screen(); // очистить экран
 
+void screen_module_init(void); // инициализация драйвера как модуль
+
 #endif 

@@ -13,7 +13,7 @@ ASMFLAGS = -f elf32
 LDFLAGS = -m elf_i386 -T linker.ld -nostdlib
 
 # файлы
-SOURCES_KERNEL = $(wildcard kernel/*.c)
+SOURCES_KERNEL = $(wildcard kernel/core/*.c)
 SOURCES_DRIVERS = $(wildcard kernel/drivers/**/*.c)
 SOURCES_ASM = $(wildcard boot/*.asm) 
 OBJECTS_C = $(SOURCES_KERNEL:.c=.o) $(SOURCES_DRIVERS:.c=.o)
@@ -41,7 +41,7 @@ kernel.bin: $(OBJECTS)
 # создание загрузочного образа
 $(ISO_NAME): kernel.bin
 	mkdir -p build/boot/grub
-	cp grub/grub.cfg build/boot/grub/
+	cp boot/grub.cfg build/boot/grub/
 	cp kernel.bin build/boot/
 	grub-mkrescue -o $(ISO_NAME) build/
 
@@ -53,7 +53,7 @@ run: $(ISO_NAME)
 clean:
 	rm -f *.o *.bin *.iso
 	rm -rf build
-	rm -f boot/*.o kernel/*.o kernel/drivers/*.o
+	rm -f boot/*.o kernel/core/*.o kernel/drivers/**/*.o
 
 build:
 	clear
