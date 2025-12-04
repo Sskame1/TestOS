@@ -1,13 +1,13 @@
-#include "drivers/video/screen.h";
-#include "modules/module.h";
-#include "ipc/ipc.h";
-#include "mem.h";
+#include "../drivers/video/screen.h"
+#include "../modules/module.h"
+#include "../ipc/ipc.h"
+#include "mem.h"
 
 // простенький планировщик - round-robin
 typedef struct {
     int pid;
     int status;
-    void *stack_pointer //0 - готов 1 - работает 2 - заблокирован
+    void *stack_pointer; //0 - готов 1 - работает 2 - заблокирован
 } Task;
 
 static Task tasks[32];
@@ -41,7 +41,7 @@ void kernel_main() {
     print_on_screen("\n>>>");
 
     // демо ipd (заглушка)
-    print_on_screen("\n[DEMO] IPC system ready\n")
+    print_on_screen("\n[DEMO] IPC system ready\n");
 
     while (1)
     {

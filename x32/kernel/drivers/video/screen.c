@@ -1,5 +1,5 @@
 #include "screen.h"
-#include "modules/module.h"
+#include "../../modules/module.h"
 
 volatile char *videomem = (volatile char*)VIDEO_MEMORY;
 
@@ -84,7 +84,7 @@ void clear_screen() {
     set_cursor_position(0, 0);
 }
 
-static void screen_module_init(void) {
+void screen_module_start() {
     clear_screen();
     print_on_screen("Screen driver initialized\n");
 }
@@ -92,11 +92,11 @@ static void screen_module_init(void) {
 Module screen_module = {
     .name = "video_screen",
     .type = MODULE_DRIVER,
-    .init = screen_module_init,
-    .deinit = NULL,
+    .init = screen_module_start,
+    .deinit = 0, //null
     .status = 0
 };
 
-void screen_module_init(void) {
+void screen_module_init() {
     module_register(&screen_module);
 }

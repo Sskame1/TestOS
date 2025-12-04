@@ -1,8 +1,29 @@
-vboxuser@Admin:/mnt/testOS/x32$ make
-ld -m elf_i386 -T linker.ld -nostdlib -o kernel.bin kernel/kernel.o boot/boot.o boot/header.o
+make clean
+make[1]: Entering directory '/mnt/testOS/x32'
+rm -f *.o *.bin *.iso
+rm -rf build
+rm -f boot/*.o kernel/core/*.o kernel/drivers/**/*.o
+make[1]: Leaving directory '/mnt/testOS/x32'
+make all
+make[1]: Entering directory '/mnt/testOS/x32'
+gcc -ffreestanding -fno-builtin -fno-stack-protector -nostdlib -m32 -Ikernel -c kernel/core/kernel.c -o kernel/core/kernel.o
+kernel/core/kernel.c:11:1: warning: no semicolon at end of struct or union
+   11 | } Task;
+      | ^
+gcc -ffreestanding -fno-builtin -fno-stack-protector -nostdlib -m32 -Ikernel -c kernel/core/mem.c -o kernel/core/mem.o
+gcc -ffreestanding -fno-builtin -fno-stack-protector -nostdlib -m32 -Ikernel -c kernel/drivers/video/screen.c -o kernel/drivers/video/screen.o
+nasm -f elf32 boot/boot.asm -o boot/boot.o
+nasm -f elf32 boot/header.asm -o boot/header.o
+ld -m elf_i386 -T linker.ld -nostdlib -o kernel.bin kernel/core/kernel.o kernel/core/mem.o kernel/drivers/video/screen.o boot/boot.o boot/header.o
 ld: warning: kernel.bin has a LOAD segment with RWX permissions
-ld: kernel/kernel.o: in function `kernel_main':
-kernel.c:(.text+0x10): undefined reference to `clear_screen'
-ld: kernel.c:(.text+0x1f): undefined reference to `print_string'
-make: *** [Makefile:45: kernel.bin] Error 1
+ld: kernel/core/kernel.o: in function `kernel_main':
+kernel.c:(.text+0x3c): undefined reference to `ipc_init'
+ld: kernel.c:(.text+0x74): undefined reference to `module_load'
+ld: kernel.c:(.text+0x8e): undefined reference to `module_list'
+ld: kernel/drivers/video/screen.o: in function `screen_module_init':
+screen.c:(.text+0x37c): undefined reference to `module_register'
+make[1]: *** [Makefile:39: kernel.bin] Error 1
+make[1]: Leaving directory '/mnt/testOS/x32'
+make: *** [Makefile:61: build] Error 2
+vboxuser@Admin:/mnt/testOS/x32$ 
 
